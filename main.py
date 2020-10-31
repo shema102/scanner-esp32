@@ -2,9 +2,9 @@
 
 # bluetooth_demo.demo()
 
+import time
 from ssd1306 import SSD1306_I2C
 from machine import I2C, Pin
-import time
 
 sdaPin = Pin(21, Pin.OUT)
 sclPin = Pin(22, Pin.OUT)
