@@ -1,9 +1,7 @@
 # Bluetooth LE peripheral
 
-import time
 import struct
-import random
-import ubluetooth
+import bluetooth
 
 
 from micropython import const
@@ -12,14 +10,14 @@ _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
 _IRQ_GATTS_WRITE = const(3)
 
-_UART_UUID = ubluetooth.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
+_UART_UUID = bluetooth.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
 _UART_TX = (
-    ubluetooth.UUID("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"),
-    ubluetooth.FLAG_READ | ubluetooth.FLAG_NOTIFY,
+    bluetooth.UUID("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"),
+    bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY,
 )
 _UART_RX = (
-    ubluetooth.UUID("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"),
-    ubluetooth.FLAG_WRITE | ubluetooth.FLAG_WRITE_NO_RESPONSE,
+    bluetooth.UUID("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"),
+    bluetooth.FLAG_WRITE | bluetooth.FLAG_WRITE_NO_RESPONSE,
 )
 _UART_SERVICE = (
     _UART_UUID,
@@ -39,7 +37,7 @@ _ADV_TYPE_APPEARANCE = const(0x19)
 
 class BLEPeripheral:
     def __init__(self, name="mpy-uart"):
-        self._ble = ubluetooth.BLE()
+        self._ble = bluetooth.BLE()
         self._ble.active(True)
         self._ble.irq(self._irq)
         ((self._handle_tx, self._handle_rx),) = self._ble.gatts_register_services(
