@@ -99,7 +99,7 @@ class BLEPeripheral:
         if appearance:
             _append(_ADV_TYPE_APPEARANCE, struct.pack("<h", appearance))
 
-        print(payload)
+        # print(payload)
         return payload
 
     def send(self, data):

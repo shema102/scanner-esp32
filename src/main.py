@@ -22,7 +22,7 @@ def logToOled(string):
 
 
 # BLE setup
-def bleOnReadCallback(data):
+def bleOnWriteCallback(data):
     data = data.decode("utf-8")
     data = removeSpecialCharacters(data)
     print(data)
@@ -32,7 +32,7 @@ def bleOnReadCallback(data):
 
 
 ble = BLEPeripheral(name="Scanner")
-ble.on_write(bleOnReadCallback)
+ble.on_write(bleOnWriteCallback)
 
 # Stepper setup
 stepperPins = [Pin(13, Pin.OUT), Pin(12, Pin.OUT), Pin(14, Pin.OUT), Pin(27, Pin.OUT)]
