@@ -2,9 +2,8 @@ import time
 
 # only test for uln2003
 class Stepper:
-    FULL_ROTATION = int(
-        4075.7728395061727 / 8
-    )  # http://www.jangeox.be/2013/10/stepper-motor-28byj-48_25.html
+    FULL_ROTATION = 4075.7728395061727 / 8
+    # http://www.jangeox.be/2013/10/stepper-motor-28byj-48_25.html
 
     HALF_STEP = [
         [0, 0, 0, 1],
@@ -29,6 +28,7 @@ class Stepper:
         self.pin3 = pin3
         self.pin4 = pin4
         self.delay = delay  # Recommend 10+ for FULL_STEP, 1 is OK for HALF_STEP
+        self.reduction = 1 / 7
 
         # Initialize all to 0
         self.reset()
@@ -45,7 +45,7 @@ class Stepper:
         self.reset()
 
     def angle(self, r, direction=1):
-        self.step(int(self.FULL_ROTATION * r / 360), direction)
+        self.step(int((self.FULL_ROTATION / self.reduction) * r / 360), direction)
 
     def reset(self):
         # Reset to 0, no holding, these are geared, you can't move them
